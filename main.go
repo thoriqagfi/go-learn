@@ -3,6 +3,7 @@ package main
 
 import "fmt"
 import "strings"
+import "math"
 
 func main() {
 	fmt.Println("Hello, world!")
@@ -231,6 +232,29 @@ func main() {
 	sayHello([]string{"John", "Wick"}, []int{20, 21})
 	// Function with return value
 	fmt.Println(sum(10, 20))
+	// Function with multiple return value
+	fmt.Println("\nMULTIPLE RETURN VALUE")
+	additionSubstraction := func(value1 int, value2 int) (int, int) {
+		return value1 + value2, value1 - value2
+	}
+	result1, result2 := additionSubstraction(10, 5)
+	fmt.Println(result1, result2)
+	// Function with predefined arguments
+	fmt.Println("\nPREDEFINED ARGUMENTS")
+	area, circumference := calculate(10)
+	fmt.Println(area, circumference)
+	// Variadic function
+	fmt.Println("\nVARIADIC FUNCTION")
+	var avg = calculateVariadic(1, 2, 3, 4, 5)
+	fmt.Println(avg)
+	// Function as parameter
+	fmt.Println("\nFUNCTION AS PARAMETER")
+	var callbackData = []string{"wick", "jason", "ethan"}
+	var dataContainsO = filter(callbackData, func(each string) bool {
+		return strings.Contains(each, "o")
+	})
+	fmt.Println("data asli", callbackData)
+	fmt.Println("data contains 'o'", dataContainsO)
 
 
 	//* To declare struct, use <type> <struct-name> struct {<field-name> <field-type>}
@@ -255,4 +279,33 @@ func sayHello(name []string, age []int) {
 // Function with return value
 func sum(value1 int, value2 int) int {
 	return value1 + value2
+}
+
+// Function with multiple return value and predefined return value
+func calculate(d float64) (area float64, circumference float64) {
+	area = math.Pi * math.Pow(d / 2, 2)
+	circumference = math.Pi * d
+
+	return
+}
+
+// variadic function
+func calculateVariadic(numbers ...int) float64 {
+	total := 0
+	for _, number := range numbers {
+		total += number
+	}
+	var avg = float64(total) / float64(len(numbers))
+	return avg
+}
+
+// Callback function
+func filter(data []string, callback func(string) bool) []string {
+	var result []string
+	for _, each := range data {
+			if filtered := callback(each); filtered {
+					result = append(result, each)
+			}
+	}
+	return result
 }
